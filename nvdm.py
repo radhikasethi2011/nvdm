@@ -59,20 +59,20 @@ class NVDM(object):
         with tf.variable_scope('decoder'):
           if self.n_sample ==1:  # single sample
             eps = tf.random_normal((batch_size, self.n_topic), 0, 1)
-            doc_vec = tf.mul(tf.exp(self.logsigm), eps) + self.mean
+            doc_vec = tf.multiply(tf.exp(self.logsigm), eps) + self.mean
             logits = tf.nn.log_softmax(utils.linear(doc_vec, self.vocab_size, scope='projection'))
-            self.recons_loss = -tf.reduce_sum(tf.mul(logits, self.x), 1)
+            self.recons_loss = -tf.reduce_sum(tf.multiply(logits, self.x), 1)
           # multiple samples
           else:
             eps = tf.random_normal((self.n_sample*batch_size, self.n_topic), 0, 1)
             eps_list = tf.split(0, self.n_sample, eps)
             recons_loss_list = []
-            for i in xrange(self.n_sample):
+            for i in range(self.n_sample):
               if i > 0: tf.get_variable_scope().reuse_variables()
               curr_eps = eps_list[i]
-              doc_vec = tf.mul(tf.exp(self.logsigm), curr_eps) + self.mean
+              doc_vec = tf.multiply(tf.exp(self.logsigm), curr_eps) + self.mean
               logits = tf.nn.log_softmax(utils.linear(doc_vec, self.vocab_size, scope='projection'))
-              recons_loss_list.append(-tf.reduce_sum(tf.mul(logits, self.x), 1))
+              recons_loss_list.append(-tf.reduce_sum(tf.multiply(logits, self.x), 1))
             self.recons_loss = tf.add_n(recons_loss_list) / self.n_sample
 
         self.objective = self.recons_loss + self.kld
@@ -109,14 +109,14 @@ def train(sess, model,
     train_batches = utils.create_batches(len(train_set), batch_size, shuffle=True)
     #-------------------------------
     # train
-    for switch in xrange(0, 2):
+    for switch in range(0, 2):
       if switch == 0:
         optim = model.optim_dec
         print_mode = 'updating decoder'
       else:
         optim = model.optim_enc
         print_mode = 'updating encoder'
-      for i in xrange(alternate_epochs):
+      for i in range(alternate_epochs):
         loss_sum = 0.0
         ppx_sum = 0.0
         kld_sum = 0.0
