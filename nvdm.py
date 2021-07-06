@@ -216,14 +216,14 @@ def main(argv=None):
                 non_linearity=non_linearity)
     sess = tf.Session()
     init = tf.initialize_all_variables()
-    a = sess.run(init)
+    sess.run(init)
 
     train_url = os.path.join(FLAGS.data_dir, 'train.feat')
     test_url = os.path.join(FLAGS.data_dir, 'test.feat')
 
     train(sess, nvdm, train_url, test_url, FLAGS.batch_size)
     print("========================================")
-    print(a)
+    print(sess.run())
 
 if __name__ == '__main__':
     tf.app.run()
