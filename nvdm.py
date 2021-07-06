@@ -93,7 +93,7 @@ def train(sess, model,
           train_url, 
           test_url, 
           batch_size, 
-          training_epochs=1000, 
+          training_epochs=20, 
           alternate_epochs=10):
   """train nvdm model."""
   train_set, train_count = utils.data_set(train_url)
@@ -216,12 +216,14 @@ def main(argv=None):
                 non_linearity=non_linearity)
     sess = tf.Session()
     init = tf.initialize_all_variables()
-    sess.run(init)
+    a = sess.run(init)
 
     train_url = os.path.join(FLAGS.data_dir, 'train.feat')
     test_url = os.path.join(FLAGS.data_dir, 'test.feat')
 
     train(sess, nvdm, train_url, test_url, FLAGS.batch_size)
+    print("========================================")
+    print(a)
 
 if __name__ == '__main__':
     tf.app.run()
