@@ -13,7 +13,7 @@ tf.set_random_seed(0)
 flags = tf.app.flags
 flags.DEFINE_string("data_dir", "data/20news", "Data dir path.")
 flags.DEFINE_float("learning_rate", 5e-5, "Learning rate.")
-flags.DEFINE_integer("batch_size", 1, "Batch size.")
+flags.DEFINE_integer("batch_size", 64, "Batch size.")
 flags.DEFINE_integer("n_hidden", 500, "Size of each hidden layer.")
 flags.DEFINE_integer("n_topic", 50, "Size of stochastic vector.")
 flags.DEFINE_integer("n_sample", 1, "Number of samples.")
