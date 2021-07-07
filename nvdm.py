@@ -126,11 +126,11 @@ def train(sess, model,
           data_batch, count_batch, mask = utils.fetch_data(
           train_set, train_count, idx_batch, FLAGS.vocab_size)
           input_feed = {model.x.name: data_batch, model.mask.name: mask}
-          _, (loss, kld) = sess.run((optim, 
-                                    [model.objective, model.kld]),
+          _, (loss, kld, mean) = sess.run((optim, 
+                                    [model.objective, model.kld, model.mean]),
                                     input_feed)
           print('=================================================================== printing sess.run from train')
-          print(sess.run((optim, [model.objective, model.kld]),input_feed))
+          print(sess.run(mean)
           loss_sum += np.sum(loss)
           kld_sum += np.sum(kld) / np.sum(mask) 
           word_count += np.sum(count_batch)
@@ -147,8 +147,8 @@ def train(sess, model,
                '| Corpus ppx: {:.5f}'.format(print_ppx),  # perplexity for all docs
                '| Per doc ppx: {:.5f}'.format(print_ppx_perdoc),  # perplexity for per doc
                '| KLD: {:.5}'.format(print_kld))
-        print("============================================== printing _")
-        print(sess.run(_))
+        #print("============================================== printing _")
+        #print(sess.run(_))
     #-------------------------------
     # dev
     loss_sum = 0.0
@@ -226,7 +226,7 @@ def main(argv=None):
     test_url = os.path.join(FLAGS.data_dir, 'test.feat')
 
     train(sess, nvdm, train_url, test_url, FLAGS.batch_size)
-    print("========================================")
+    print("========================================***********************")
     print(sess.run())
 
 if __name__ == '__main__':
