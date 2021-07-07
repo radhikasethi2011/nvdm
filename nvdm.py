@@ -130,7 +130,7 @@ def train(sess, model,
                                     [model.objective, model.kld]),
                                     input_feed)
           print('=================================================================== printing sess.run from train')
-          print(sess.run((optim, [model.objective, model.kld]),input_feed)
+          print(sess.run((optim, [model.objective, model.kld]),input_feed))
           loss_sum += np.sum(loss)
           kld_sum += np.sum(kld) / np.sum(mask) 
           word_count += np.sum(count_batch)
