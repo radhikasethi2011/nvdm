@@ -129,6 +129,8 @@ def train(sess, model,
           _, (loss, kld) = sess.run((optim, 
                                     [model.objective, model.kld]),
                                     input_feed)
+          print('=================================================================== printing sess.run from train')
+          print(sess.run((optim, [model.objective, model.kld]),input_feed)
           loss_sum += np.sum(loss)
           kld_sum += np.sum(kld) / np.sum(mask) 
           word_count += np.sum(count_batch)
@@ -145,6 +147,8 @@ def train(sess, model,
                '| Corpus ppx: {:.5f}'.format(print_ppx),  # perplexity for all docs
                '| Per doc ppx: {:.5f}'.format(print_ppx_perdoc),  # perplexity for per doc
                '| KLD: {:.5}'.format(print_kld))
+        print("============================================== printing _")
+        print(sess.run(_))
     #-------------------------------
     # dev
     loss_sum = 0.0
