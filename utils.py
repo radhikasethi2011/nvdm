@@ -25,7 +25,7 @@ def data_set(data_url):
   fin.close()
   return data, word_count
 
-def create_batches(data_size, batch_size, shuffle=True):
+def create_batches(data_size, batch_size, shuffle=False):
   """create index by batches."""
   batches = []
   ids = list(range(data_size))
