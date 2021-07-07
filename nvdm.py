@@ -105,6 +105,7 @@ def train(sess, model,
   dev_batches = utils.create_batches(len(dev_set), batch_size, shuffle=False)
   test_batches = utils.create_batches(len(test_set), batch_size, shuffle=False)
   
+  myfile = open('embeds.txt','w')
   for epoch in range(training_epochs):
     train_batches = utils.create_batches(len(train_set), batch_size, shuffle=True)
     #-------------------------------
@@ -131,7 +132,9 @@ def train(sess, model,
                                     input_feed)
           print('=================================================================== printing sess.run from train')
           #print(sess.run(mean))
-          print(mean)
+          print("length of mean", len(mean))
+          print("shape of mean", mean.shape)
+          myfile.write(mean+'\n')
           loss_sum += np.sum(loss)
           kld_sum += np.sum(kld) / np.sum(mask) 
           word_count += np.sum(count_batch)
@@ -203,6 +206,7 @@ def train(sess, model,
              '| Perplexity: {:.9f}'.format(print_ppx),
              '| Per doc ppx: {:.5f}'.format(print_ppx_perdoc),
              '| KLD: {:.5}'.format(print_kld))   
+  myfile.close()
 
 def main(argv=None):
     if FLAGS.non_linearity == 'tanh':
